@@ -1,16 +1,32 @@
 import { useQuery, gql } from "@apollo/client";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 const ROL_QUERY = gql`
   query MostrarRoles {
     MostrarRoles {
       id
       rol
+      tiporol
     }
   }
 `;
 
 const RolLista = () => {
-  const { data } = useQuery(ROL_QUERY);
+  const { data, error } = useQuery(ROL_QUERY);
+
+  if (error) {
+    return (
+      <div class="alert alert-danger" role="alert">
+        <h4>¡Error de envío! {error.message};</h4>
+        <div class="col-md">
+          <div class="form-floating">
+            <Link class="btn btn-primary  text-white" to="/menuadmin">
+              Volver
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div class="container">
@@ -28,6 +44,9 @@ const RolLista = () => {
                   <th>
                     <h3>ROL</h3>
                   </th>
+                  <th>
+                    <h3>TIPO ROL</h3>
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -35,6 +54,7 @@ const RolLista = () => {
                   <tr class="text-white fw-bold">
                     <td>{MostrarRoles.id}</td>
                     <td>{MostrarRoles.rol}</td>
+                    <td>{MostrarRoles.tiporol}</td>
                   </tr>
                 ))}
               </tbody>

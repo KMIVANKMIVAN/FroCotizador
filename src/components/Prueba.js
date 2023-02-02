@@ -178,9 +178,104 @@ export default Prueba; */
     <div></div>
   );
 };
-
 export default Prueba; */
+
+/* /////////////////////de create emoresa
+<div class="col-md">
+            <div class="col-sm-5">
+              <div class="form-floating">
+                <select
+                  class="form-select"
+                  // disabled
+                  value={formState.tipo_empresas_id}
+                  onChange={e =>
+                    setFormState({
+                      ...formState,
+                      tipo_empresas_id: parseInt(e.target.value),
+                    })
+                  }
+                >
+                  {data4 && (
+                    <>
+                      {data4.MostrarTipoEmpresa.map(MostrarTipoEmpresa => (
+                        // <option value={MostrarTipoEmpresa.id}>
+                        //   {MostrarTipoEmpresa.tipo}
+                        // </option>
+                      ))}
+                    </>
+                  )}
+                </select>
+                <label for="Sucural" class="for-label">
+                  Tipo Empresa
+                </label>
+              </div>
+            </div>
+*/
+
+import React, { useState } from "react";
+import { useMutation, useQuery, gql } from "@apollo/client";
+import { EMPRESAS } from "../constants";
+const EMPRESA_QUERY = gql`
+  query MostrarEmpresas {
+    MostrarEmpresas {
+      id
+      razon_social
+    }
+  }
+`;
+const ROL_QUERY = gql`
+  query MostrarRoles {
+    MostrarRoles {
+      id
+      rol
+    }
+  }
+`;
 const Prueba = () => {
+  const { data: data1, error } = useQuery(EMPRESA_QUERY);
+
+  const { data: data3 } = useQuery(ROL_QUERY);
+
+  if (error) return `Submission error! ${error.message}`;
+
+  return (
+    <div>
+      <div>
+        {data1 && (
+          <>
+            {data1.MostrarEmpresas.map(MostrarEmpresas => (
+              <div class="text-white">
+                <h3>
+                  {MostrarEmpresas.id} {}
+                  {MostrarEmpresas.razon_social}
+                </h3>
+              </div>
+            ))}
+          </>
+        )}
+      </div>
+      <div>
+        {data1 && (
+          <>
+            {data1.MostrarEmpresas.forEach(MostrarEmpresas => {
+              <div class="text-white">
+                <h3>
+                  {MostrarEmpresas.id} {}
+                  {MostrarEmpresas.razon_social}
+                </h3>
+              </div>;
+            })}
+          </>
+        )}
+      </div>
+      <div></div>
+    </div>
+  );
+};
+
+export default Prueba;
+
+/* const Prueba = () => {
   return (
     <div class="container">
       <div class="input-group mb-3">
@@ -324,7 +419,7 @@ const Prueba = () => {
   );
 };
 
-export default Prueba;
+export default Prueba; */
 /* 
 import React, { useState } from "react";
 import validator from "validator";

@@ -1,8 +1,11 @@
-import React from "react";
+import React,{ useState } from "react";
 import { Link } from 'react-router-dom'
 const MenuAdmin = () => {
+
   return (
     <div>
+      {/* {window.location.reload(true)} */}
+
       <div>
         <h2 class="text-white">Administracion</h2>
         <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -19,7 +22,7 @@ const MenuAdmin = () => {
                   Se recomienda revisar los parametros dos veces antes de pulsar
                   el boton Registrar.
                 </p>
-                <Link to="/createempresa" class="btn btn-primary">
+                <Link  to="/createempresa" class="btn btn-primary">
                   Registrar Empresa
                 </Link>
               </div>

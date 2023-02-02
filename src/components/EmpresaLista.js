@@ -1,6 +1,6 @@
 import { useQuery, gql } from "@apollo/client";
 import Empresa from "./Empresa";
-
+import { Link } from 'react-router-dom'
 const Empresas_QUERY = gql`
 query MostrarEmpresas {
   MostrarEmpresas {
@@ -22,7 +22,22 @@ query MostrarEmpresas {
 `;
 
 const EmpresaLista = () => {
-  const { data } = useQuery(Empresas_QUERY);
+  const { data, error } = useQuery(Empresas_QUERY);
+
+  if (error) {
+    return (
+      <div class="alert alert-danger" role="alert">
+        <h4>¡Error de envío! {error.message};</h4>
+        <div class="col-md">
+          <div class="form-floating">
+            <Link class="btn btn-primary  text-white" to="/menuadmin">
+              Volver
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>

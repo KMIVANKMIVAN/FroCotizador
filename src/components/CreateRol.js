@@ -15,6 +15,7 @@ const CreateRol = () => {
 
   const [formState, setFormState] = useState({
     rol: null,
+    tiporol: null
   });
 
   const [createRol, { error }] = useMutation(
@@ -23,13 +24,27 @@ const CreateRol = () => {
       variables: {
         createRolInput: {
           rol: formState.rol,
+          tiporol: formState.tiporol
         },
       },
       onCompleted: () => navigate("/menuadmin"),
     }
   );
 
-  if (error) return `Submission error! ${error.message}`;
+  if (error) {
+    return (
+      <div class="alert alert-danger" role="alert">
+        <h4>¡Error de envío! {error.message};</h4>
+        <div class="col-md">
+          <div class="form-floating">
+            <Link class="btn btn-primary  text-white" to="/menuadmin">
+              Volver
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <form
@@ -61,7 +76,23 @@ const CreateRol = () => {
           </div>
         </div>
         <div class="col-md">
-          <div class="form-floating"></div>
+          <div class="form-floating">
+          <input
+              type="text"
+              class="form-control"
+              placeholder="Administrador, Agente, Ejecutivo"
+              value={formState.tiporol}
+              onChange={e =>
+                setFormState({
+                  ...formState,
+                  tiporol: e.target.value,
+                })
+              }
+            />
+            <label for="Empresa" class="for-label">
+              Tipo de Rol
+            </label>
+          </div>
         </div>
       </div>
       <div class="row g-2">

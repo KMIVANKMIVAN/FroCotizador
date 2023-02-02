@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Accordion from "react-bootstrap/Accordion";
 import { useMutation, useQuery, gql } from "@apollo/client";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 const USUARIOS_MUTATION = gql`
   mutation ActualizarUsuario($updateUsuarioInput: UpdateUsuarioInput!) {
     ActualizarUsuario(updateUsuarioInput: $updateUsuarioInput) {
@@ -28,7 +28,7 @@ const USUARIOS_PASSWORD_MUTATION = gql`
 
 const Usuario = props => {
   const { usuarios } = props;
-  const { data: data2 } = useQuery(SUCURSAL_QUERY);
+  const { data: data2, error: error0 } = useQuery(SUCURSAL_QUERY);
   const navigate = useNavigate();
 
   const [formState, setFormState] = useState({
@@ -88,8 +88,71 @@ const Usuario = props => {
     }
   );
 
-  if (error1) return `Submission error! ${error1.message}`;
-  if (error2) return `Submission error! ${error2.message}`;
+  const [password, setPasswordValue] = React.useState("password");
+  const toggle = () => {
+    if (password === "password") {
+      setPasswordValue("text");
+      return;
+    }
+    setPasswordValue("password");
+  };
+  
+  if (error0) {
+    return (
+      <div class="alert alert-danger" role="alert">
+        <h4>¡Error de envío! {error0.message};</h4>
+        <div class="col-md">
+          <div class="form-floating">
+            <Link class="btn btn-primary  text-white" to="/menuadmin">
+              Volver
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  if (error1) {
+    return (
+      <div class="alert alert-danger" role="alert">
+        <h4>¡Error de envío! {error1.message};</h4>
+        <div class="col-md">
+          <div class="form-floating">
+            <Link class="btn btn-primary  text-white" to="/menuadmin">
+              Volver
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  if (error2) {
+    return (
+      <div class="alert alert-danger" role="alert">
+        <h4>¡Error de envío! {error1.message};</h4>
+        <div class="col-md">
+          <div class="form-floating">
+            <Link class="btn btn-primary  text-white" to="/menuadmin">
+              Volver
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  if (error3) {
+    return (
+      <div class="alert alert-danger" role="alert">
+        <h4>¡Error de envío! {error3.message};</h4>
+        <div class="col-md">
+          <div class="form-floating">
+            <Link class="btn btn-primary  text-white" to="/menuadmin">
+              Volver
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -97,19 +160,23 @@ const Usuario = props => {
         <div class="card-body">
           <h4 class="card-title">Datos Personales</h4>
           <h5 class="card-text">
-            {usuarios.id}: {usuarios.ap_paterno} {usuarios.ap_materno} {}
-            {usuarios.ap_casado} {usuarios.nombres}. Numero de Carnet:{" "}
-            {usuarios.numero_carnet} {usuarios.extesion} Con Nit:{" "}
-            {usuarios.nit_usuario ? usuarios.nit_usuario : "Sin Nit"}
+            Identificador Unico {usuarios.id} {": "}
+            {usuarios.ap_paterno} {" "}
+            {usuarios.ap_materno} {" "}
+            {usuarios.ap_casado} {" "}
+            {usuarios.nombres} {" "}
+            Numero de Carnet: {usuarios.numero_carnet} {usuarios.extesion} {" "}
+            {usuarios.nit_usuario ? `Con Nit: ${usuarios.nit_usuario}` : ""}
           </h5>
           <h4 class="card-title">Estado</h4>
           <h5 class="card-text">{usuarios.estado ? "Activo" : "Inactivo"}</h5>
           <h4 class="card-title">Contactos Personales</h4>
           <h5 class="card-text">
-            Correo: {usuarios.correo} Celular: {usuarios.celular} Telefono:{" "}
-            {usuarios.telefono} {}
-            Direccion: {usuarios.direccion_usuario} Pagina Web{" "}
-            {usuarios.pagina_web_usuario}
+            Correo: {usuarios.correo} {" "}
+            {usuarios.celular ? `Celular: ${usuarios.celular}` : ""} {" "}
+            {usuarios.telefono ? `Telefono: ${usuarios.telefono}` : ""} {" "}
+            {usuarios.direccion_usuario ? `Direccion: ${usuarios.direccion_usuario}` : ""} {" "}
+            {usuarios.pagina_web_usuario ? `Pagina Web: ${usuarios.pagina_web_usuario}` : ""}
           </h5>
           <h4 class="card-title">Tipo de Rol</h4>
           <h5 class="card-text">{usuarios.rol.rol}</h5>
@@ -301,7 +368,7 @@ const Usuario = props => {
                       <div class="col-md">
                         <div class="form-floating">
                           <input
-                            type="text"
+                            type={password}
                             class="form-control"
                             value={form2State.password}
                             onChange={e =>
@@ -314,13 +381,37 @@ const Usuario = props => {
                           <label for="contraseñaUsuario" class="for-label">
                             Contraseña
                           </label>
+                          <a className="btn btn-primary" onClick={toggle}>
+                            {password === "password" ? (
+                              <svg
+                                width="20"
+                                height="17"
+                                fill="currentColor"
+                                className="bi bi-eye-slash-fill"
+                                viewBox="0 0 16 16"
+                              >
+                                <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z" />
+                                <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z" />
+                              </svg>
+                            ) : (
+                              <svg
+                                width="20"
+                                height="17"
+                                fill="currentColor"
+                                className="bi bi-eye-fill"
+                                viewBox="0 0 16 16"
+                              >
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                              </svg>
+                            )}
+                          </a>
                         </div>
                       </div>
                       <div class="col-md">
                         <div class="form-floating"></div>
                       </div>
                     </div>
-
                     <div class="row g-2">
                       <div class="col-md">
                         <div class="form-floating">
@@ -359,6 +450,7 @@ const Usuario = props => {
                               })
                             }
                           >
+                            <option selected>Seleccione</option>
                             {data2 && (
                               <>
                                 {data2.MostrarSucursales.map(

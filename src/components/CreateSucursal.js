@@ -29,7 +29,20 @@ const CreateSucursal = () => {
     }
   );
 
-  if (error) return `Submission error! ${error.message}`;
+  if (error) {
+    return (
+      <div class="alert alert-danger" role="alert">
+        <h4>¡Error de envío! {error.message};</h4>
+        <div class="col-md">
+          <div class="form-floating">
+            <Link class="btn btn-primary  text-white" to="/menuadmin">
+              Volver
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <form

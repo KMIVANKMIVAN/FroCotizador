@@ -17,6 +17,10 @@ const EMPRESA_QUERY = gql`
     MostrarEmpresas {
       id
       razon_social
+      tipo_empresa {
+        id
+        tipo
+      }
     }
   }
 `;
@@ -33,6 +37,7 @@ const ROL_QUERY = gql`
     MostrarRoles {
       id
       rol
+      tiporol
     }
   }
 `;
@@ -45,23 +50,23 @@ const PruebaCreateUsuario = () => {
   const navigate = useNavigate();
 
   const [formState, setFormState] = useState({
-    ap_paterno: "",
-    ap_materno: "",
-    ap_casado: "",
-    nombres: "",
-    numero_carnet: "",
-    extesion: "LP",
-    correo: "",
-    password: "",
-    estado: true,
-    celular: "",
-    telefono: "",
-    nit_usuario: "",
-    direccion_usuario: "",
-    pagina_web_usuario: "",
-    rolId: 2,
-    sucursalId: 1,
-    empresasId: 1,
+    ap_paterno: null,
+    ap_materno: null,
+    ap_casado: null,
+    nombres: null,
+    numero_carnet: null,
+    extesion: null,
+    correo: null,
+    password: null,
+    estado: null,
+    celular: null,
+    telefono: null,
+    nit_usuario: null,
+    direccion_usuario: null,
+    pagina_web_usuario: null,
+    rolId: null,
+    sucursalId: null,
+    empresasId: null,
   });
 
   const [password, setPasswordValue] = React.useState("password");
@@ -111,8 +116,7 @@ const PruebaCreateUsuario = () => {
         minSymbols: 1,
       })
     ) {
-      // return <div>hola</div>
-      setErrorMessage("Contraseña fuerte: Se Registrara");
+      setErrorMessage("Contraseña Segura: Se Registrara");
     } else {
       setErrorMessage(
         "Minimo 8 Caracteres, Simbolos, Numeros, Mayusculas, Minusculas: No Se Registrara"
@@ -124,8 +128,21 @@ const PruebaCreateUsuario = () => {
 
   return (
     <div>
+      <div class="alert alert-warning d-flex align-items-center" role="alert">
+        <p>
+          Los Campos:
+          <strong class="text-danger">
+            {" "}
+            "Nombres", "Apellido Materno o Paterno", "Numero Carnet".
+            "Extesion", "Correo", "Contraseña", "Estado", "Rol", "Sucursal",
+            "Empresa" SON OBLIGATORIOS
+          </strong>
+          , caso contrario no se Realizara el Registro
+        </p>
+      </div>
       <form
-        class="row g-3"
+        class="row g-3 needs-validation"
+        novalidate
         onSubmit={e => {
           e.preventDefault();
           createUsuario();
@@ -146,6 +163,7 @@ const PruebaCreateUsuario = () => {
                     })
                   }
                 >
+                  <option selected>Seleccione</option>
                   {data3 && (
                     <>
                       {data3.MostrarRoles.map(MostrarRoles => (
@@ -156,9 +174,7 @@ const PruebaCreateUsuario = () => {
                     </>
                   )}
                 </select>
-                <label for="administradorUsuario" class="for-label">
-                  Rol de Usuario
-                </label>
+                <label class="for-label">Rol de Usuario</label>
               </div>
             </div>
           </div>
@@ -166,6 +182,8 @@ const PruebaCreateUsuario = () => {
             <div class="form-floating">
               <input
                 type="text"
+                id="validationCustom01"
+                required
                 class="form-control"
                 value={formState.nombres}
                 onChange={e =>
@@ -175,9 +193,10 @@ const PruebaCreateUsuario = () => {
                   })
                 }
               />
-              <label for="nombresUsuario" class="for-label">
+              <label for="validationCustom01" class="for-label">
                 Nombres
               </label>
+              <div class="valid-feedback">Completado</div>
             </div>
           </div>
         </div>
@@ -242,6 +261,8 @@ const PruebaCreateUsuario = () => {
             <div class="form-floating">
               <input
                 type="text"
+                id="validationCustom01"
+                required
                 class="form-control"
                 value={formState.numero_carnet}
                 onChange={e =>
@@ -271,6 +292,7 @@ const PruebaCreateUsuario = () => {
                     })
                   }
                 >
+                  <option selected>Seleccione</option>
                   <option value="LP">LP</option>
                   <option value="CB">CB</option>
                   <option value="SC">SC</option>
@@ -291,6 +313,8 @@ const PruebaCreateUsuario = () => {
             <div class="form-floating">
               <input
                 type="email"
+                id="validationCustom01"
+                required
                 class="form-control"
                 placeholder="Correo Electronico Valido"
                 value={formState.correo}
@@ -312,6 +336,8 @@ const PruebaCreateUsuario = () => {
             <div class="form-floating">
               <input
                 type={password}
+                id="validationCustom01"
+                required
                 class="form-control"
                 placeholder="Contraseña 8 o mas Caracteres"
                 value={formState.password}
@@ -328,7 +354,6 @@ const PruebaCreateUsuario = () => {
               <label for="contraseñaUsuario" class="for-label">
                 Contraseña
               </label>
-
               <a className="btn btn-primary" onClick={toggle}>
                 {password === "password" ? (
                   <svg
@@ -354,29 +379,18 @@ const PruebaCreateUsuario = () => {
                   </svg>
                 )}
               </a>
-
-              {/* <br /> */}
-              {/* {errorMessage === "" ? null : (
-                <span
-                class="text-white"
-                >
-                  {errorMessage}
-                </span>
-              )} */}
             </div>
           </div>
           <div class="col-md">
             <div class=" col-md-12 col-lg-8 ">
               {(() => {
-                if (errorMessage === "Contraseña fuerte: Se Registrara") {
-                  // return <span class="text-white">{errorMessage}</span>;
+                if (errorMessage === "Contraseña Segura: Se Registrara") {
                   return (
                     <div class="alert alert-success" role="alert">
                       {errorMessage}
                     </div>
                   );
                 } else {
-                  // return <span class="text-danger">{errorMessage}</span>;
                   return (
                     <div class="alert alert-danger" role="alert">
                       {errorMessage}
@@ -401,6 +415,7 @@ const PruebaCreateUsuario = () => {
                     })
                   }
                 >
+                  <option selected>Seleccione</option>
                   {data1 && (
                     <>
                       {data1.MostrarEmpresas.map(MostrarEmpresas => (
@@ -434,6 +449,7 @@ const PruebaCreateUsuario = () => {
                     });
                   }}
                 >
+                  <option selected>Seleccione</option>
                   <option value="true">Activo</option>
                   <option value="false">Inactivo</option>
                 </select>
@@ -552,6 +568,7 @@ const PruebaCreateUsuario = () => {
                     })
                   }
                 >
+                  <option selected>Seleccione</option>
                   {data2 && (
                     <>
                       {data2.MostrarSucursales.map(MostrarSucursales => (
@@ -569,13 +586,90 @@ const PruebaCreateUsuario = () => {
             </div>
           </div>
         </div>
-
         <div class="row g-2">
           <div class="col-md">
             <div class="form-floating">
-              <button class="btn btn-primary  text-white" type="submit">
-                Registrar
-              </button>
+              {data1 && (
+                <>
+                  {data1.MostrarEmpresas.map(MostrarEmpresas => (
+                    <div>
+                      {data3 && (
+                        <>
+                          {data3.MostrarRoles.map(MostrarRoles => (
+                            <div>
+                              {(() => {
+                                if (
+                                  formState.rolId == MostrarRoles.id &&
+                                  MostrarEmpresas.tipo_empresa.tipo ==
+                                    MostrarRoles.tiporol &&
+                                  "Administrador" == MostrarRoles.rol &&
+                                  MostrarEmpresas.id == formState.empresasId &&
+                                  errorMessage ===
+                                    "Contraseña Segura: Se Registrara" &&
+                                  formState.extesion !== null &&
+                                  formState.estado !== null &&
+                                  formState.sucursalId !== null
+                                ) {
+                                  return (
+                                    <button
+                                      class="btn btn-primary  text-white"
+                                      type="submit"
+                                    >
+                                      Registrar Usuario Interno
+                                    </button>
+                                  );
+                                }
+                                if (
+                                  formState.rolId == MostrarRoles.id &&
+                                  MostrarEmpresas.tipo_empresa.tipo ==
+                                    MostrarRoles.tiporol &&
+                                  "Agente" == MostrarRoles.rol &&
+                                  MostrarEmpresas.id == formState.empresasId &&
+                                  errorMessage ===
+                                    "Contraseña Segura: Se Registrara" &&
+                                  formState.extesion !== null &&
+                                  formState.estado !== null &&
+                                  formState.sucursalId !== null
+                                ) {
+                                  return (
+                                    <button
+                                      class="btn btn-primary  text-white"
+                                      type="submit"
+                                    >
+                                      Registrar Usuario Interno
+                                    </button>
+                                  );
+                                }
+                                if (
+                                  formState.rolId == MostrarRoles.id &&
+                                  MostrarEmpresas.tipo_empresa.tipo ==
+                                    MostrarRoles.tiporol &&
+                                  "Ejecutivo" == MostrarRoles.rol &&
+                                  MostrarEmpresas.id == formState.empresasId &&
+                                  errorMessage ===
+                                    "Contraseña Segura: Se Registrara" &&
+                                  formState.extesion !== null &&
+                                  formState.estado !== null &&
+                                  formState.sucursalId !== null
+                                ) {
+                                  return (
+                                    <button
+                                      class="btn btn-primary  text-white"
+                                      type="submit"
+                                    >
+                                      Registrar Usuario Externo
+                                    </button>
+                                  );
+                                }
+                              })()}
+                            </div>
+                          ))}
+                        </>
+                      )}
+                    </div>
+                  ))}
+                </>
+              )}
             </div>
           </div>
           <div class="col-md">

@@ -10,8 +10,23 @@ const ROL_QUERY = gql`
 `;
 
 const TipoEmpresaLista = () => {
-  const { data } = useQuery(ROL_QUERY);
+  const { data, error } = useQuery(ROL_QUERY);
 
+  if (error) {
+    return (
+      <div class="alert alert-danger" role="alert">
+        <h4>¡Error de envío! {error.message};</h4>
+        <div class="col-md">
+          <div class="form-floating">
+            <Link class="btn btn-primary  text-white" to="/menuadmin">
+              Volver
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
   return (
     <div class="container">
       <div class="col-md-auto">

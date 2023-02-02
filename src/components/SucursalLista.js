@@ -10,7 +10,22 @@ const SUCURSALES_QUERY = gql`
 `;
 
 const SucursalLista = () => {
-  const { data } = useQuery(SUCURSALES_QUERY);
+  const { data, error } = useQuery(SUCURSALES_QUERY);
+
+  if (error) {
+    return (
+      <div class="alert alert-danger" role="alert">
+        <h4>¡Error de envío! {error.message};</h4>
+        <div class="col-md">
+          <div class="form-floating">
+            <Link class="btn btn-primary  text-white" to="/menuadmin">
+              Volver
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div class="container">
