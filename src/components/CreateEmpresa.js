@@ -86,7 +86,7 @@ const CreateEmpresa = () => {
       >
         <h2 class="text-white">Registrar Empresa</h2>
         <div class="row g-2">
-          <div class="col-md">
+          <div class="col-md was-validated">
             <div class="form-floating">
               <input
                 type="text"
@@ -106,7 +106,7 @@ const CreateEmpresa = () => {
               </label>
             </div>
           </div>
-          <div class="col-md">
+          <div class="col-md was-validated">
             <div class="form-floating">
               <input
                 type="text"
@@ -128,7 +128,7 @@ const CreateEmpresa = () => {
           </div>
         </div>
         <div class="row g-2">
-          <div class="col-md">
+          <div class="col-md was-validated">
             <div class="form-floating">
               <input
                 type="text"
@@ -252,7 +252,7 @@ const CreateEmpresa = () => {
                     {(() => {
                       if (MostrarTipoEmpresa.tipo === "Externa") {
                         return (
-                          <div class="form-check">
+                          <div class="form-check was-validated">
                             <label class="form-check-label text-white" for="invalidCheck">
                               Tipo de Empresa Externa
                             </label>

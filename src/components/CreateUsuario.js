@@ -168,6 +168,62 @@ const PruebaCreateUsuario = () => {
               <div class="form-floating">
                 <select
                   class="form-select"
+                  value={formState.empresasId}
+                  onChange={e =>
+                    setFormState({
+                      ...formState,
+                      empresasId: parseInt(e.target.value),
+                    })
+                  }
+                >
+                  <option selected>Seleccione</option>
+                  {data1 && (
+                    <>
+                      {data1.MostrarEmpresas.map(MostrarEmpresas => (
+                        <option value={MostrarEmpresas.id}>
+                          {MostrarEmpresas.razon_social}
+                        </option>
+                      ))}
+                    </>
+                  )}
+                </select>
+                <label for="Sucural" class="for-label">
+                  Empresa
+                </label>
+                <div class="invalid-feedback">
+                  Example invalid select feedback
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md was-validated">
+            <div class="form-floating">
+              <input
+                type="text"
+                id="validationCustom01"
+                required
+                class="form-control"
+                value={formState.nombres}
+                onChange={e =>
+                  setFormState({
+                    ...formState,
+                    nombres: e.target.value,
+                  })
+                }
+              />
+              <label for="validationCustom01" class="for-label">
+                Nombres
+              </label>
+              <div class="valid-feedback">Completado</div>
+            </div>
+          </div>
+        </div>
+        <div class="row g-2">
+          <div class="col-md">
+            <div class="col-sm-5">
+              <div class="form-floating">
+                <select
+                  class="form-select"
                   value={formState.rolId}
                   onChange={e =>
                     setFormState({
@@ -195,29 +251,6 @@ const PruebaCreateUsuario = () => {
             <div class="form-floating">
               <input
                 type="text"
-                id="validationCustom01"
-                required
-                class="form-control"
-                value={formState.nombres}
-                onChange={e =>
-                  setFormState({
-                    ...formState,
-                    nombres: e.target.value,
-                  })
-                }
-              />
-              <label for="validationCustom01" class="for-label">
-                Nombres
-              </label>
-              <div class="valid-feedback">Completado</div>
-            </div>
-          </div>
-        </div>
-        <div class="row g-2">
-          <div class="col-md">
-            <div class="form-floating">
-              <input
-                type="text"
                 class="form-control"
                 value={formState.ap_paterno}
                 onChange={e =>
@@ -232,6 +265,8 @@ const PruebaCreateUsuario = () => {
               </label>
             </div>
           </div>
+        </div>
+        <div class="row g-2">
           <div class="col-md">
             <div class="form-floating">
               <input
@@ -250,8 +285,6 @@ const PruebaCreateUsuario = () => {
               </label>
             </div>
           </div>
-        </div>
-        <div class="row g-2">
           <div class="col-md">
             <div class="form-floating">
               <input
@@ -270,7 +303,9 @@ const PruebaCreateUsuario = () => {
               </label>
             </div>
           </div>
-          <div class="col-md">
+        </div>
+        <div class="row g-2">
+          <div class="col-md was-validated">
             <div class="form-floating">
               <input
                 type="text"
@@ -290,8 +325,6 @@ const PruebaCreateUsuario = () => {
               </label>
             </div>
           </div>
-        </div>
-        <div class="row g-2">
           <div class="col-md">
             <div class="col-sm-5">
               <div class="form-floating">
@@ -322,30 +355,9 @@ const PruebaCreateUsuario = () => {
               </div>
             </div>
           </div>
-          <div class="col-md">
-            <div class="form-floating">
-              <input
-                type="email"
-                id="validationCustom01"
-                required
-                class="form-control"
-                placeholder="Correo Electronico Valido"
-                value={formState.correo}
-                onChange={e =>
-                  setFormState({
-                    ...formState,
-                    correo: e.target.value,
-                  })
-                }
-              />
-              <label for="correoElectronicoUsuario" class="for-label">
-                Correo
-              </label>
-            </div>
-          </div>
         </div>
         <div class="row g-2">
-          <div class="col-md">
+          <div class="col-md was-validated">
             <div class="form-floating">
               <input
                 type={password}
@@ -415,34 +427,25 @@ const PruebaCreateUsuario = () => {
           </div>
         </div>
         <div class="row g-2">
-          <div class="col-md">
-            <div class="col-sm-5">
-              <div class="form-floating">
-                <select
-                  class="form-select"
-                  value={formState.empresasId}
-                  onChange={e =>
-                    setFormState({
-                      ...formState,
-                      empresasId: parseInt(e.target.value),
-                    })
-                  }
-                >
-                  <option selected>Seleccione</option>
-                  {data1 && (
-                    <>
-                      {data1.MostrarEmpresas.map(MostrarEmpresas => (
-                        <option value={MostrarEmpresas.id}>
-                          {MostrarEmpresas.razon_social}
-                        </option>
-                      ))}
-                    </>
-                  )}
-                </select>
-                <label for="Sucural" class="for-label">
-                  Empresa
-                </label>
-              </div>
+          <div class="col-md was-validated">
+            <div class="form-floating">
+              <input
+                type="email"
+                id="validationCustom01"
+                required
+                class="form-control"
+                placeholder="Correo Electronico Valido"
+                value={formState.correo}
+                onChange={e =>
+                  setFormState({
+                    ...formState,
+                    correo: e.target.value,
+                  })
+                }
+              />
+              <label for="correoElectronicoUsuario" class="for-label">
+                Correo
+              </label>
             </div>
           </div>
           <div class="col-md">
@@ -617,7 +620,8 @@ const PruebaCreateUsuario = () => {
                                   MostrarEmpresas.tipo_empresa.tipo ===
                                     MostrarRoles.tiporol &&
                                   "Administrador" === MostrarRoles.rol &&
-                                  parseInt(MostrarEmpresas.id) === formState.empresasId &&
+                                  parseInt(MostrarEmpresas.id) ===
+                                    formState.empresasId &&
                                   errorMessage ===
                                     "Contraseña Segura: Se Registrara" &&
                                   formState.extesion !== null &&
@@ -634,11 +638,13 @@ const PruebaCreateUsuario = () => {
                                   );
                                 }
                                 if (
-                                  formState.rolId === parseInt(MostrarRoles.id) &&
+                                  formState.rolId ===
+                                    parseInt(MostrarRoles.id) &&
                                   MostrarEmpresas.tipo_empresa.tipo ===
                                     MostrarRoles.tiporol &&
                                   "Agente" === MostrarRoles.rol &&
-                                  parseInt(MostrarEmpresas.id) === formState.empresasId &&
+                                  parseInt(MostrarEmpresas.id) ===
+                                    formState.empresasId &&
                                   errorMessage ===
                                     "Contraseña Segura: Se Registrara" &&
                                   formState.extesion !== null &&
@@ -655,11 +661,13 @@ const PruebaCreateUsuario = () => {
                                   );
                                 }
                                 if (
-                                  formState.rolId === parseInt(MostrarRoles.id) &&
+                                  formState.rolId ===
+                                    parseInt(MostrarRoles.id) &&
                                   MostrarEmpresas.tipo_empresa.tipo ===
                                     MostrarRoles.tiporol &&
                                   "Ejecutivo" === MostrarRoles.rol &&
-                                  parseInt(MostrarEmpresas.id) === formState.empresasId &&
+                                  parseInt(MostrarEmpresas.id) ===
+                                    formState.empresasId &&
                                   errorMessage ===
                                     "Contraseña Segura: Se Registrara" &&
                                   formState.extesion !== null &&

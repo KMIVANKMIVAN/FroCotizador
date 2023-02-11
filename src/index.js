@@ -21,7 +21,7 @@ import { AUTH_TOKEN } from "./constants";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:2000/graphql",
-  // uri: "https://fb80-177-222-63-144.sa.ngrok.io/graphql",
+  // uri: "http://server02.lavitalicia.bo:2000/graphql",
   // uri: "",
   // cache: new InMemoryCache(),
 });
